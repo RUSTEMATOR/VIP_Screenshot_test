@@ -12,21 +12,23 @@ test.describe('Compare screenshots of the VIP pages to the sample screenshot', (
   test.beforeEach(async ({page}) => {
       vipPage = new VipPage(page, url)
       await vipPage.navigate()
+      await vipPage.acceptCookies()
   })
 
   for (const title of Object.keys(accounts)) {
       const email = accounts[title].email
       const password = accounts[title].password
 
-  test(`Screenshot test of the VIP icons of ${title}`, async ({page}) => {
+  test(`Screenshot test of the VIP burger icons of ${title}`, async ({page}) => {
       
       await vipPage.openLogin()
       await vipPage.fillEmail(email)
       await vipPage.fillPassword(password)
       await vipPage.submitLogin()
       await vipPage.openBurgerMenu()
-
-      await expect(vipPage.statusIcon).toHaveScreenshot();
+    
+      await page.waitForTimeout(3)
+      await expect(vipPage.statusBurgerIcon).toHaveScreenshot();
 
 
   
